@@ -13,7 +13,7 @@ source ~/.lhm
 # Main
 #
 
-install_bin="$(echo ./*/mysql_install_db)"
+install_bin="$(ls $mysqldir/*/mysql_install_db | head -1)"
 
 mkdir -p "$basedir/master/data" "$basedir/slave/data"
 
