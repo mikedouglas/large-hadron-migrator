@@ -2,6 +2,7 @@
 # Schmidt
 
 require 'lhm/chunker'
+require 'lhm/file_chunker'
 require 'lhm/entangler'
 require 'lhm/atomic_switcher'
 require 'lhm/locked_switcher'
@@ -34,10 +35,19 @@ module Lhm
         end
       end
 
+      if options[:outfile_dir] and not File.directory?(options[:outfile_dir])
+        raise Error.new("Directory specified by options[:outfile_dir] doesn't exist.")
+      end
+
       migration = @migrator.run
 
       Entangler.new(migration, @connection).run do
-        Chunker.new(migration, @connection, options).run
+        if options[:outfile_dir]
+          FileChunker.new(migration, @connection, options).run
+        else
+          Chunker.new(migration, @connection, options).run
+        end
+
         if options[:atomic_switch]
           AtomicSwitcher.new(migration, @connection).run
         else

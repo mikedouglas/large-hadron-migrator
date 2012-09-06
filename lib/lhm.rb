@@ -30,6 +30,10 @@ module Lhm
   #   Use atomic switch to rename tables (defaults to: true)
   #   If using a version of mysql affected by atomic switch bug, LHM forces user
   #   to set this option (see SqlHelper#supports_atomic_switch?)
+  # @option options [String] :outfile_dir
+  #   Directory in which to write chunk-sized outfiles
+  #   If nil, the initial copy will proceed directly, creating a read lock on
+  #   the table. If not nil, folder must exist.
   # @yield [Migrator] Yielded Migrator object records the changes
   # @return [Boolean] Returns true if the migration finishes
   # @raise [Error] Raises Lhm::Error in case of a error and aborts the migration
