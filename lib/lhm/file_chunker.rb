@@ -3,6 +3,8 @@
 require 'lhm/command'
 require 'lhm/sql_helper'
 
+require 'fileutils'
+
 module Lhm
   class FileChunker
     include Command
